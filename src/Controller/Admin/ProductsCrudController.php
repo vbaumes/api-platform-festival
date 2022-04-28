@@ -33,7 +33,8 @@ class ProductsCrudController extends AbstractCrudController
             ImageField::new('illustration')->setBasePath('uploads/')
                 ->setUploadDir('public/uploads/')
                 ->setUploadedFileNamePattern('[randomhash].[extension]'),
-            AssociationField::new('category')
+            AssociationField::new('category'),
+            AssociationField::new('gender')
             // CollectionField::new('category') 
             // Permet de faire plusieurs catégories pour un produit
         ];

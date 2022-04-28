@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter as FilterSearchFilter;
 use App\Repository\ProductsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -22,6 +24,7 @@ use Symfony\Component\Validator\Constraints\Length;
     ],
     itemOperations: ['get'],
 )]
+#[ApiFilter(FilterSearchFilter::class, properties: ['gender' => 'exact', 'name' => 'partial'])]
 class Products
 {
     #[ORM\Id]
@@ -61,6 +64,10 @@ class Products
 
     #[ORM\Column(type: 'float')]
     private $price;
+
+    #[ORM\ManyToOne(targetEntity: Gender::class, inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $gender;
 
     public function getId(): ?int
     {
@@ -171,6 +178,18 @@ class Products
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getGender(): ?Gender
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?Gender $gender): self
+    {
+        $this->gender = $gender;
 
         return $this;
     }
