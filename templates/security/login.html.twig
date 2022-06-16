@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back Office - Se connecter{% endblock %}
+
+{% block body %}
+<div class ="container">
+    {% if error %}
+        <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <h1 class="title">Back Office Tenue 2 Festival</h1>
+    <form method="post" class="form">
+        <div class="input">
+            <label for="username" class="text">Votre email :</label>
+            <input type="email" value="{{ last_username }}" name="_username" id="username" placeholder="Votre adresse email" class="text" required autofocus>
+        </div>
+        <div class="input">
+            <label for="password" class="text">Votre mot de passe :</label>
+            <input type="password" name="_password" id="password" placeholder="Votre mot de passe" class="text" required>
+        </div>
+
+        <button type="submit">
+            Se connecter
+        </button>
+    </form>
+</div>
+{% endblock %}

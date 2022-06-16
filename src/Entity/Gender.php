@@ -3,40 +3,24 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\CategoryRepository;
+use App\Repository\GenderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ApiResource(
-    attributes: [
-        'normalization_context' => ['groups' => ['read']]
-    ],
-    collectionOperations: [
-        'get',
-        'post' => [
-            'openapi_context' =>[
-                'security' => [['bearerAuth' => []]]
-            ]
-        ]
-    ],
-    itemOperations: ['get'],
-)]
-class Category
+#[ApiResource()]
+#[ORM\Entity(repositoryClass: GenderRepository::class)]
+class Gender
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups("read")]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("read")]
     private $name;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class)]
+    #[ORM\OneToMany(mappedBy: 'gender', targetEntity: Products::class)]
     private $products;
 
     public function __construct()
@@ -78,7 +62,7 @@ class Category
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->setCategory($this);
+            $product->setGender($this);
         }
 
         return $this;
@@ -88,8 +72,8 @@ class Category
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getCategory() === $this) {
-                $product->setCategory(null);
+            if ($product->getGender() === $this) {
+                $product->setGender(null);
             }
         }
 
