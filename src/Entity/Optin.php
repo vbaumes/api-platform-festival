@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\OptinRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OptinRepository::class)]
+#[ApiResource(
+    collectionOperations: [
+        'post' => []
+    ]
+)]
 class Optin
 {
     #[ORM\Id]

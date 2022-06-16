@@ -16,7 +16,8 @@ use Symfony\Component\Validator\Constraints\Length;
         'normalization_context' => ['groups' => ['read']]
     ],
     collectionOperations: [
-        'get' => [
+        'get',
+        'post' => [
             'openapi_context' =>[
                 'security' => [['bearerAuth' => []]]
             ]
@@ -41,28 +42,32 @@ class Products
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("read")]
     private $slug;
 
     #[ORM\Column(type: 'text')]
+    #[Groups("read")]
     private $description;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     private $category;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups("read")]
     private $link;
 
     #[ORM\Column(type: 'string', length: 20)]
+    #[Groups("read")]
     private $shortDescription;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups("read")]
     private $isBest;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $illustration;
 
     #[ORM\Column(type: 'float')]
+    #[Groups("read")]
     private $price;
 
     #[ORM\ManyToOne(targetEntity: Gender::class, inversedBy: 'products')]
